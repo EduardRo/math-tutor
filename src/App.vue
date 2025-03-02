@@ -1,47 +1,50 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-    <p class="text-6xl text-blue-600">Math Tutor</p>
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div id="app" class="app-container">
+    <header class="app-header" v-if="isAuthenticated">
+      <div class="logo">
+        <img src="@/assets/logo.svg" alt="AI Math Tutor" class="logo-image" />
+        <h1 class="logo-text">AI Math Tutor</h1>
+      </div>
+      
+      <nav class="main-nav">
+        <router-link to="/">Home</router-link>
+        
+        <router-link to="/about">About</router-link>
+        <router-link to="/about">About</router-link>
+        <router-link to="/lessons">Lessons</router-link>
+        
+        
+        
+        
+      </nav>
+      
+      <div class="user-menu">
+        <span class="user-name">{{ user.name }}</span>
+        <button @click="logout" class="logout-button">Logout</button>
+      </div>
+    </header>
+    
+    <main class="app-content">
+      <router-view />
+    </main>
+    
+    <footer class="app-footer" v-if="isAuthenticated">
+      <p>&copy; {{ new Date().getFullYear() }} AI Math Tutor. All rights reserved.</p>
+    </footer>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script>
+import { useAuthStore } from '@/stores/auth';
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+export default {
+  name: 'App',
+  setup() {
+    const authStore = useAuthStore();
+    const { user, isAuthenticated, logout } = authStore;
+    //const selectedLessonId = '1'; // Example: Replace with dynamic logic
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+    return { user, isAuthenticated, logout };
   }
 }
-</style>
+</script>
