@@ -65,7 +65,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted } from 'vue';
-import TutorAvatar from '@/components/TutorAvatar/TutorAvatar.vue';
+import TutorAvatar from '../components/TutorAvatar/TutorAvatar.vue';
 import VideoCapture from '@/components/VideoCapture/VideoCapture.vue';
 import axios from 'axios';
 
