@@ -4,6 +4,11 @@ import TheWelcome from './components/TheWelcome.vue'
 </script>
 
 <template>
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/src/styles.css" rel="stylesheet">
+</head>
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
@@ -13,6 +18,9 @@ import TheWelcome from './components/TheWelcome.vue'
   </header>
 
   <main>
+    <h1 class="text-3xl font-bold underline text-red-500">
+    Hello world!
+  </h1>
     <TheWelcome />
   </main>
 </template>

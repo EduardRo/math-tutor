@@ -7,6 +7,7 @@
       <h3>
         <slot name="heading"></slot>
       </h3>
+      <h4 class="text-sm text-blue-500">Opa!</h4>
       <slot></slot>
     </div>
   </div>
