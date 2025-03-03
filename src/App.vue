@@ -1,39 +1,40 @@
 <template>
   <div id="app" class="app-container">
-    <!-- Header: Always visible -->
+    <!-- Header -->
     <header class="app-header">
+      <!-- Logo on the left -->
       <div class="logo">
         <img src="@/assets/logo.svg" alt="AI Math Tutor" class="logo-image" />
         <h1 class="logo-text">AI Math Tutor</h1>
       </div>
-      
-      <!-- Navigation: Always visible -->
-      <nav class="main-nav">
-        <router-link to="/">Home</router-link>
-        <router-link to="/about">About</router-link>
-        <router-link to="/lessons">Lessons</router-link>
-      </nav>
-      
-      <!-- User Menu: Conditionally visible based on authentication -->
-      <div class="user-menu" v-if="isAuthenticated">
-        <span class="user-name">{{ user.name }}</span>
-        <button @click="logout" class="logout-button">Logout</button>
-      </div>
-      
-      <!-- Login Button: Conditionally visible if not authenticated -->
-      <div class="login-button" v-else>
-        <router-link to="/login" class="login-link">Login</router-link>
+
+      <!-- Navigation and Login/Logout -->
+      <div class="nav-container">
+        <nav class="main-nav">
+          <router-link to="/">Home</router-link>
+          <router-link to="/about">About</router-link>
+          <router-link to="/lessons">Lessons</router-link>
+        </nav>
+
+        <!-- Login/Logout Button -->
+        <div class="auth-section">
+          <div v-if="isAuthenticated" class="user-menu">
+            <span class="user-name">{{ user.name }}</span>
+            <button @click="logout" class="logout-button">Logout</button>
+          </div>
+          <router-link v-else to="/login" class="login-link">Login</router-link>
+        </div>
       </div>
     </header>
-    
-    <!-- Main Content: Always visible -->
+
+    <!-- Main Content -->
     <main class="app-content">
       <router-view />
     </main>
-    
-    <!-- Footer: Always visible -->
+
+    <!-- Footer -->
     <footer class="app-footer">
-      <p>&copy; {{ new Date().getFullYear() }} AI Math Tutor. All rights reserved.</p>
+      <p>© {{ new Date().getFullYear() }} AI Math Tutor. All rights reserved.</p>
     </footer>
   </div>
 </template>
@@ -47,18 +48,26 @@ export default {
     const authStore = useAuthStore();
     const { user, isAuthenticated, logout } = authStore;
     return { user, isAuthenticated, logout };
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-/* Add your styles here */
+/* Reset box-sizing */
+* {
+  box-sizing: border-box;
+}
+
+/* General Layout */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  max-width: 1280px; /* Fixed width */
+  margin: 0 auto; /* Center the container horizontally */
 }
 
+/* Header */
 .app-header {
   display: flex;
   justify-content: space-between;
@@ -66,8 +75,10 @@ export default {
   padding: 1rem;
   background-color: #2c445c;
   border-bottom: 1px solid #0be016;
+  flex-wrap: nowrap;
 }
 
+/* Logo */
 .logo {
   display: flex;
   align-items: center;
@@ -81,19 +92,52 @@ export default {
 .logo-text {
   margin: 0;
   font-size: 1.5rem;
+  color: white;
 }
 
+/* Navigation and Auth Container */
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Navigation */
 .main-nav {
   display: flex;
   gap: 1rem;
 }
 
-.user-menu, .login-button {
-  display: flex;
-  align-items: center;
+.main-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
 }
 
-.logout-button, .login-link {
+.main-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Auth Section */
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-name {
+  color: white;
+  font-size: 1rem;
+}
+
+.logout-button,
+.login-link {
   padding: 0.5rem 1rem;
   background-color: #007bff;
   color: white;
@@ -101,21 +145,26 @@ export default {
   border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
+  font-size: 1rem;
 }
 
-.logout-button:hover, .login-link:hover {
+.logout-button:hover,
+.login-link:hover {
   background-color: #0056b3;
 }
 
+/* Main Content */
 .app-content {
   flex: 1;
-  padding: 1rem;
+  padding: 2rem;
 }
 
+/* Footer */
 .app-footer {
   text-align: center;
   padding: 1rem;
   background-color: #2c445c;
   border-top: 1px solid #0be016;
+  color: white;
 }
 </style>
