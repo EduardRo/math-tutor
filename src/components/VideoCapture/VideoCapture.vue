@@ -182,8 +182,8 @@ export default {
 <style scoped>
 .video-capture-container {
   position: relative;
-  width: 160px;
-  height: 120px;
+  width: 260px;
+  height: 220px;
   border-radius: 8px;
   overflow: hidden;
   border: 2px solid #e2e8f0;

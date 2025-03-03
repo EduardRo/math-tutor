@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/HomeView.vue';
 import About from '../views/AboutView.vue';
 import LessonView from '../views/LessonView.vue';
+import LoginPage from '@/authentication/LoginPage.vue';
 
 // Define your routes
 const routes = [
@@ -22,6 +23,12 @@ const routes = [
     path: '/lessons', // Dynamic segment for lessonId
     name: 'LessonView',
     component: LessonView,
+    
+  },
+  {
+    path: '/login', // Dynamic segment for lessonId
+    name: 'Login',
+    component: LoginPage,
     
   },
 ];

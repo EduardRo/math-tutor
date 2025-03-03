@@ -75,7 +75,12 @@ export default {
     TutorAvatar,
     VideoCapture
   },
-  
+  props: {
+    lessonId: {
+      type: Number,
+      required: true
+    }
+  },
   data() {
     return {
       lesson: {
@@ -297,7 +302,7 @@ export default {
   padding: 1rem;
   border: 1px solid #e2e8f0;
   border-radius: 0.5rem;
-  background-color: #f8fafc;
+  background-color: #265c92;
 }
 
 .problem-question {

@@ -82,7 +82,7 @@ export default {
 .avatar-message {
   margin-top: 1rem;
   padding: 0.75rem 1rem;
-  background-color: #ebf8ff;
+  background-color: #265c92;
   border-radius: 1rem;
   border-top-left-radius: 0;
   max-width: 80%;
