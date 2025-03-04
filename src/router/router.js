@@ -6,6 +6,7 @@ import Home from '../views/HomeView.vue';
 import About from '../views/AboutView.vue';
 import LessonView from '../views/LessonView.vue';
 import LoginPage from '@/authentication/LoginPage.vue';
+import CallbackView from '@/authentication/CallbackPage.vue';
 
 // Define your routes
 const routes = [
@@ -30,6 +31,11 @@ const routes = [
     name: 'Login',
     component: LoginPage,
     
+  },
+  {
+    path: '/auth/callback',
+    name: 'callback',
+    component: CallbackView,
   },
 ];
 

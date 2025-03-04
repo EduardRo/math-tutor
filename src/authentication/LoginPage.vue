@@ -1,13 +1,14 @@
 <template>
-    <div class="login-container">
-      <h1>Login</h1>
-      <form @submit.prevent="handleLogin" class="login-form">
+  <div class="login-container">
+    <div class="login-card">
+      <h2 class="login-title">Login</h2>
+      <form @submit.prevent="login" class="login-form">
         <div class="form-group">
           <label for="email">Email</label>
           <input
-            type="email"
+            v-model="credentials.email"
             id="email"
-            v-model="email"
+            type="email"
             placeholder="Enter your email"
             required
           />
@@ -15,149 +16,140 @@
         <div class="form-group">
           <label for="password">Password</label>
           <input
-            type="password"
+            v-model="credentials.password"
             id="password"
-            v-model="password"
+            type="password"
             placeholder="Enter your password"
             required
           />
         </div>
         <button type="submit" class="login-button">Login</button>
       </form>
-  
+
       <div class="social-login">
-        <p>Or sign in with Google:</p>
-        <button @click="handleGoogleLogin" class="social-button">
-          
-          Sign in with Google
+        <button @click="loginWithGoogle" class="social-button google-button">
+          Login with Google
+        </button>
+        <button @click="loginWithFacebook" class="social-button facebook-button">
+          Login with Facebook
         </button>
       </div>
-  
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    </div>
-  </template>
-  
-  <script>
-  import { ref } from 'vue';
-  import { useAuthStore } from '@/stores/auth'; // Assuming you're using Pinia for state management
-  import axios from 'axios'; // Axios for API requests
-  
-  export default {
-    name: 'Login',
-    setup() {
-      const email = ref('');
-      const password = ref('');
-      const errorMessage = ref('');
-      const authStore = useAuthStore();
-  
-      const handleLogin = async () => {
-        try {
-          const response = await axios.post('http://your-laravel-app-url/api/login', {
-            email: email.value,
-            password: password.value,
-          });
-  
-          // Save the access token and user data to the store
-          authStore.login(response.data.user, response.data.access_token);
-  
-          // Redirect to home or another page after login
-          window.location.href = '/';
-        } catch (error) {
-          errorMessage.value = error.response?.data?.message || 'Login failed. Please try again.';
-        }
-      };
-  
-      const handleGoogleLogin = async () => {
-        try {
-          // Redirect to Laravel's Google authentication route
-          window.location.href = 'http://your-laravel-app-url/api/login/google';
-        } catch (error) {
-          errorMessage.value = 'Google login failed. Please try again.';
-        }
-      };
-  
-      return {
-        email,
-        password,
-        errorMessage,
-        handleLogin,
-        handleGoogleLogin,
-      };
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .login-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
-  
-  .login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    text-align: left;
-  }
-  
-  input {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .login-button {
-    padding: 0.5rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .login-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .google-login {
-    margin-top: 1.5rem;
-  }
-  
-  .google-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .google-button:hover {
-    background-color: #f8f9fa;
-  }
-  
-  .google-logo {
-    width: 20px;
-    height: 20px;
-  }
-  
-  .error-message {
-    color: red;
-    margin-top: 1rem;
-  }
 
-  .social-login {
+      <p class="register-link">
+        Don't have an account? <router-link to="/register">Register here</router-link>.
+      </p>
+    </div>
+  </div>
+</template>
+
+<script>
+import AuthService from '../services/AuthService';
+
+export default {
+  name: 'LoginView',
+  data() {
+    return {
+      credentials: {
+        email: '',
+        password: '',
+      },
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await AuthService.login(this.credentials);
+        localStorage.setItem('token', response.data.token);
+        this.$router.push('/');
+      } catch (error) {
+        alert('Login failed: ' + error.response.data.message);
+      }
+    },
+    async loginWithGoogle() {
+      AuthService.redirectToProvider('google');
+    },
+    async loginWithFacebook() {
+      AuthService.redirectToProvider('facebook');
+    },
+  },
+};
+</script>
+
+<style scoped>
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+}
+
+.login-card {
+  background-color: #1a1a1a;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #fff;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+label {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+input {
+  padding: 0.75rem;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #007bff;
+}
+
+.login-button {
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+.social-login {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -175,6 +167,35 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: rgb(65, 65, 150);
 }
-  </style>
+
+.social-button:hover {
+  opacity: 0.9;
+}
+
+.google-button {
+  background-color: #db4437;
+  color: #fff;
+}
+
+.facebook-button {
+  background-color: #1877f2;
+  color: #fff;
+}
+
+.register-link {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #ccc;
+}
+
+.register-link a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+  color: #0056b3;
+}
+</style>
