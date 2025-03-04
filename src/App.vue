@@ -41,14 +41,36 @@
 
 <script>
 import { useAuthStore } from '@/stores/auth';
+import { storeToRefs } from 'pinia';
+import {computed} from 'vue';
+import { useRouter } from 'vue-router';
+
 
 export default {
   name: 'App',
   setup() {
+    /** Old code
     const authStore = useAuthStore();
     const { user, isAuthenticated, logout } = authStore;
+    console.log('user:', user);
+    console.log('isAuthenticated:', isAuthenticated);
+    return { user, isAuthenticated, logout };
+    */
+    const authStore = useAuthStore();
+    const router = useRouter();
+
+    // Ensure reactivity
+    const { user, token } = storeToRefs(authStore);
+    const isAuthenticated = computed(() => !!token.value); // Check if a token exists
+
+    const logout = () => {
+      authStore.clearAuth();
+      router.push('/'); // Redirect to home page
+    };
+
     return { user, isAuthenticated, logout };
   },
+  
 };
 </script>
 

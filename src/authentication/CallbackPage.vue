@@ -1,31 +1,41 @@
 <template>
-    <div>
-      <p>Logging you in...</p>
-    </div>
-  </template>
-  
-  <script setup>
-  import { onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { useAuthStore } from '../stores/auth';
-  
-  const router = useRouter();
-  const authStore = useAuthStore();
-  
-  onMounted(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-  
-    // Decode the token (it might be URL-encoded)
-    const token = decodeURIComponent(urlParams.get('token'));
-    const user = JSON.parse(urlParams.get('user'));
-  
-    if (token && user) {
-      authStore.setToken(token);
-      authStore.setUser(user);
-      router.push({ name: 'home' });
-    } else {
-      router.push({ name: 'login' });
+  <div>
+    <p>Logging you in...</p>
+  </div>
+</template>
+
+<script setup>
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '../stores/auth';
+
+const router = useRouter();
+const authStore = useAuthStore();
+
+onMounted(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const token = urlParams.get('token');
+  const user = urlParams.get('user');
+
+  console.log('Received token:', token);
+  console.log('Received user:', user);
+
+  if (token && user) {
+    try {
+      authStore.setToken(decodeURIComponent(token));
+      authStore.setUser(JSON.parse(user));
+      
+      console.log('isAuthenticated after login:', authStore.isAuthenticated);
+      
+      router.push({ name: 'Home' });
+    } catch (error) {
+      console.error('Error parsing user data:', error);
+      router.push({ name: 'Login' });
     }
-  });
-  </script>
-  
+  } else {
+    console.warn('Token or user missing in callback URL');
+    router.push({ name: 'Login' });
+  }
+});
+</script>
