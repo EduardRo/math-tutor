@@ -7,6 +7,7 @@ import About from '../views/AboutView.vue';
 import LessonView from '../views/LessonView.vue';
 import LoginPage from '@/authentication/LoginPage.vue';
 import CallbackView from '@/authentication/CallbackPage.vue';
+import YoutubeNewsView from '@/views/YoutubeNewsView.vue';
 
 // Define your routes
 const routes = [
@@ -36,6 +37,11 @@ const routes = [
     path: '/auth/callback',
     name: 'callback',
     component: CallbackView,
+  },
+  {
+    path: '/youtube',
+    name: 'YoutubeNews',
+    component: YoutubeNewsView,
   },
 ];
 

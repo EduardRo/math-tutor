@@ -14,6 +14,7 @@
           <router-link to="/">Home</router-link>
           <router-link to="/about">About</router-link>
           <router-link to="/lessons">Lessons</router-link>
+          <router-link to="/youtube">YouTube</router-link>
         </nav>
 
         <!-- Login/Logout Button -->
@@ -131,7 +132,7 @@ export default {
 }
 
 .main-nav a {
-  color: white;
+  color: rgb(255, 243, 243);
   text-decoration: none;
   font-size: 1rem;
 }
