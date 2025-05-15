@@ -4,10 +4,11 @@ import { createRouter, createWebHistory } from 'vue-router';
 // Import your view components
 import Home from '../views/HomeView.vue';
 import About from '../views/AboutView.vue';
-import LessonView from '../views/LessonView.vue';
+
 import LoginPage from '@/authentication/LoginPage.vue';
 import CallbackView from '@/authentication/CallbackPage.vue';
-import YoutubeNewsView from '@/views/YoutubeNewsView.vue';
+
+import GuideInFaith from '@/views/GuideInFaith.vue';
 
 // Define your routes
 const routes = [
@@ -21,12 +22,7 @@ const routes = [
     name: 'About',
     component: About,
   },
-  {
-    path: '/lessons', // Dynamic segment for lessonId
-    name: 'LessonView',
-    component: LessonView,
-    
-  },
+  
   {
     path: '/login', // Dynamic segment for lessonId
     name: 'Login',
@@ -38,10 +34,11 @@ const routes = [
     name: 'callback',
     component: CallbackView,
   },
+  
   {
-    path: '/youtube',
-    name: 'YoutubeNews',
-    component: YoutubeNewsView,
+    path: '/guideinfaith',
+    name: 'GuideInFaith',
+    component: GuideInFaith,
   },
 ];
 

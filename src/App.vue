@@ -4,17 +4,16 @@
     <header class="app-header">
       <!-- Logo on the left -->
       <div class="logo">
-        <img src="@/assets/logo.svg" alt="AI Math Tutor" class="logo-image" />
-        <h1 class="logo-text">AI Math Tutor</h1>
+        <img src="@/assets/logo.png" alt="Guide In Faith" class="logo-image" />
+        <h1 class="logo-text">Guide In Faith</h1>
       </div>
 
       <!-- Navigation and Login/Logout -->
       <div class="nav-container">
         <nav class="main-nav">
           <router-link to="/">Home</router-link>
+          <router-link to="/guideinfaith">Ask</router-link>
           <router-link to="/about">About</router-link>
-          <router-link to="/lessons">Lessons</router-link>
-          <router-link to="/youtube">YouTube</router-link>
         </nav>
 
         <!-- Login/Logout Button -->
@@ -35,28 +34,22 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-      <p>© {{ new Date().getFullYear() }} AI Math Tutor. All rights reserved.</p>
+      <p>
+        © {{ new Date().getFullYear() }} Guide In Faith. All rights reserved.
+      </p>
     </footer>
   </div>
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/auth';
-import { storeToRefs } from 'pinia';
-import {computed} from 'vue';
-import { useRouter } from 'vue-router';
-
+import { useAuthStore } from "@/stores/auth";
+import { storeToRefs } from "pinia";
+import { computed } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
-  name: 'App',
+  name: "App",
   setup() {
-    /** Old code
-    const authStore = useAuthStore();
-    const { user, isAuthenticated, logout } = authStore;
-    console.log('user:', user);
-    console.log('isAuthenticated:', isAuthenticated);
-    return { user, isAuthenticated, logout };
-    */
     const authStore = useAuthStore();
     const router = useRouter();
 
@@ -66,12 +59,11 @@ export default {
 
     const logout = () => {
       authStore.clearAuth();
-      router.push('/'); // Redirect to home page
+      router.push("/"); // Redirect to home page
     };
 
     return { user, isAuthenticated, logout };
   },
-  
 };
 </script>
 
@@ -96,7 +88,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #2c445c;
+  background-color: #000000;
   border-bottom: 1px solid #0be016;
   flex-wrap: nowrap;
 }
@@ -115,7 +107,7 @@ export default {
 .logo-text {
   margin: 0;
   font-size: 1.5rem;
-  color: white;
+  color: rgb(217, 255, 2);
 }
 
 /* Navigation and Auth Container */
@@ -186,7 +178,7 @@ export default {
 .app-footer {
   text-align: center;
   padding: 1rem;
-  background-color: #2c445c;
+  background-color: #000000;
   border-top: 1px solid #0be016;
   color: white;
 }
